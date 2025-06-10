@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Nueva Evaluación de Enfermería
+      form(action="/evaluacionesEnfermeria/crear" method="POST")
+        .mb-3
+          label.form-label Internación (opcional)
+          select.form-select(name="internacion_id")
+            option(value="") -- Ninguna --
+            each i in internaciones
+              option(value=i.id)= i.nombre + " " + i.apellido
+        .mb-3
+          label.form-label Admisión (opcional)
+          select.form-select(name="admision_id")
+            option(value="") -- Ninguna --
+            each a in admisiones
+              option(value=a.id)= a.nombre + " " + a.apellido
+        .mb-3
+          label.form-label Fecha
+          input.form-control(type="datetime-local", name="fecha")
+        .mb-3
+          label.form-label Síntomas
+          textarea.form-control(name="sintomas")
+        .mb-3
+          label.form-label Antecedentes
+          textarea.form-control(name="antecedentes")
+        .mb-3
+          label.form-label Plan de Cuidados
+          textarea.form-control(name="plan_cuidados")
+        button.btn.btn-success(type="submit") Guardar

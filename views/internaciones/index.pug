@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Internaciones
+      a.btn.btn-primary.mb-3(href="/internaciones/nueva") + Nueva Internación
+
+      table.table.table-striped
+        thead.table-primary
+          tr
+            th Paciente
+            th Habitación
+            th Cama
+            th Desde
+        tbody
+          each i in internaciones
+            tr
+              td #{i.nombre} #{i.apellido}
+              td #{i.habitacion}
+              td #{i.cama}
+              td #{i.fecha_inicio}

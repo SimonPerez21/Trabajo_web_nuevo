@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  .card.shadow.mb-4
+    .card-body.text-center
+      h2.text-dark Bienvenido al Sistema HIS Internación
+      p.lead.text-muted Este sistema permite registrar, controlar y evaluar pacientes internados en tiempo real.
+      p.text-muted Use los accesos rápidos o consulte los módulos desde el menú superior.
+
+
+  .row.g-4
+    .col-md-4
+      .card.border-0.shadow-sm.text-center
+        .card-body
+          i.bi.bi-person-circle.fs-1.text-primary
+          h5.mt-2 Pacientes
+          p.text-muted Registro y búsqueda.
+          a.btn.btn-outline-primary.mt-2(href="/pacientes") Ir
+
+    .col-md-4
+      .card.border-0.shadow-sm.text-center
+        .card-body
+          i.bi.bi-door-open.fs-1.text-success
+          h5.mt-2 Admisiones
+          p.text-muted Control de ingresos hospitalarios.
+          a.btn.btn-outline-success.mt-2(href="/admisiones") Ir
+
+    .col-md-4
+      .card.border-0.shadow-sm.text-center
+        .card-body
+          i.bi.bi-hospital-fill.fs-1.text-danger
+          h5.mt-2 Internaciones
+          p.text-muted Gestión de pacientes internados.
+          a.btn.btn-outline-danger.mt-2(href="/internaciones") Ir
+
+  .row.g-4.mt-2
+    .col-md-6
+      .card.border-0.shadow-sm.text-center
+        .card-body
+          i.bi.bi-clipboard2-pulse-fill.fs-1.text-warning
+          h5.mt-2 Evaluaciones Médicas
+          p.text-muted Registro clínico y tratamientos.
+          a.btn.btn-outline-warning.mt-2(href="/evaluacionesMedicas") Ver
+
+    .col-md-6
+      .card.border-0.shadow-sm.text-center
+        .card-body
+          i.bi.bi-heart-pulse-fill.fs-1.text-info
+          h5.mt-2 Enfermería
+          p.text-muted Registro de signos y cuidados.
+          a.btn.btn-outline-info.mt-2(href="/evaluacionesEnfermeria") Ver
+
+  .card.bg-light.mt-4
+    .card-body
+      h5.text-muted ¿Necesitás ayuda?
+      p Contactá al equipo técnico para soporte o capacitación.
+      ul
+        li 📞 Interno 3471606650
+        li 📧 soporte@hospital.org

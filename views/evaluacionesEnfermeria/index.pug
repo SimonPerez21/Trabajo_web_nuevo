@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Evaluaciones de Enfermería
+      a.btn.btn-primary.mb-3(href="/evaluacionesEnfermeria/nueva") + Nueva Evaluación
+
+      table.table.table-hover
+        thead.table-primary
+          tr
+            th Fecha
+            th Paciente
+            th Síntomas
+        tbody
+          each ev in evaluaciones
+            tr
+              td= ev.fecha
+              td= ev.nombre + " " + ev.apellido
+              td= ev.sintomas

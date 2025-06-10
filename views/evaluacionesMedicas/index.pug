@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Evaluaciones Médicas
+      a.btn.btn-primary.mb-3(href="/evaluacionesMedicas/nueva") + Nueva Evaluación
+
+      table.table.table-striped
+        thead.table-primary
+          tr
+            th Fecha
+            th Paciente
+            th Diagnóstico
+        tbody
+          each ev in evaluaciones
+            tr
+              td= ev.fecha
+              td= ev.nombre + " " + ev.apellido
+              td= ev.diagnostico

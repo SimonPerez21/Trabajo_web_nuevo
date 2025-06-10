@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  h2.mb-3 Estado de Camas
+
+  table.table.table-bordered
+    thead
+      tr
+        th Habitación
+        th Ala
+        th Cama
+        th Estado
+    tbody
+      each cama in camas
+        tr
+          td= cama.habitacion
+          td= cama.ala
+          td= cama.numero
+          td= cama.estado

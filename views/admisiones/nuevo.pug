@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Nueva Admisión
+      form(action="/admisiones/crear" method="POST")
+        .mb-3
+          label.form-label Paciente
+          select.form-select(name="paciente_id")
+            each paciente in pacientes
+              option(value=paciente.id)= paciente.nombre + " " + paciente.apellido
+        .mb-3
+          label.form-label Fecha de Admisión
+          input.form-control(type="datetime-local", name="fecha_admision")
+        .mb-3
+          label.form-label Tipo de Ingreso
+          select.form-select(name="tipo_ingreso")
+            option(value="programada") Programada
+            option(value="derivada") Derivada
+            option(value="emergencia") Emergencia
+        button.btn.btn-success(type="submit") Guardar
