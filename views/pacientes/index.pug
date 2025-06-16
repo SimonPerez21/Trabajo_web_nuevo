@@ -6,13 +6,40 @@ block content
       h2.card-title Lista de Pacientes
       a.btn.btn-primary.mb-3(href="/pacientes/nuevo") + Nuevo Paciente
 
-      table.table.table-hover.table-bordered
+      table.table.table-striped
         thead.table-primary
           tr
             th Nombre
             th Apellido
+            th DNI
+            th Fecha de nacimiento
+            th Sexo
+            th Dirección
+            th Teléfono
+            th Contacto emergencia
+            th Teléfono emergencia
+            th Acciones
         tbody
           each paciente in pacientes
             tr
-              td= paciente.nombre
-              td= paciente.apellido
+              td #{paciente.nombre}
+              td #{paciente.apellido}
+              td #{paciente.dni}
+              td #{paciente.fecha_nacimiento}
+              td #{paciente.sexo}
+              td #{paciente.direccion}
+              td #{paciente.telefono}
+              td #{paciente.contacto_emergencia}
+              td #{paciente.telefono_emergencia}
+              td
+                a.btn.btn-sm.btn-outline-primary(href=`/pacientes/${paciente.id}/editar`) Editar
+                if !paciente.tieneAdmisiones
+                  form(
+                    action=`/pacientes/${paciente.id}/eliminar`
+                    method="POST"
+                    style="display:inline;"
+                    onsubmit="return confirm('¿Estás seguro que querés eliminar este paciente?');"
+                  )
+                    button.btn.btn-sm.btn-outline-danger(type="submit") Eliminar
+                else
+                  button.btn.btn-sm.btn-outline-secondary(disabled title="Tiene admisiones") Eliminar

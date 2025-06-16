@@ -4,32 +4,40 @@ block content
   .card.shadow
     .card-body
       h2.card-title Nueva Evaluación Médica
+
       form(action="/evaluacionesMedicas/crear" method="POST")
         .mb-3
-          label.form-label Internación (opcional)
-          select.form-select(name="internacion_id")
-            option(value="") -- Ninguna --
-            each i in internaciones
-              option(value=i.id)= i.nombre + " " + i.apellido
+          label.form-label Admisión
+          select.form-select(name="admision_id" required)
+            option(value="") Seleccione una admisión
+            each adm in admisiones
+              option(value=adm.id) #{adm.nombre} #{adm.apellido}
+
         .mb-3
-          label.form-label Admisión (opcional)
-          select.form-select(name="admision_id")
-            option(value="") -- Ninguna --
-            each a in admisiones
-              option(value=a.id)= a.nombre + " " + a.apellido
+          label.form-label Internación
+          select.form-select(name="internacion_id")
+            option(value="") (opcional)
+            each i in internaciones
+              option(value=i.id) #{i.nombre} #{i.apellido}
+
         .mb-3
           label.form-label Fecha
-          input.form-control(type="datetime-local", name="fecha")
+          input.form-control(type="datetime-local" name="fecha" required)
+
         .mb-3
           label.form-label Diagnóstico
-          textarea.form-control(name="diagnostico")
+          textarea.form-control(name="diagnostico" required)
+
         .mb-3
           label.form-label Tratamiento
-          textarea.form-control(name="tratamiento")
+          textarea.form-control(name="tratamiento" required)
+
         .mb-3
           label.form-label Medicamentos
           textarea.form-control(name="medicamentos")
+
         .mb-3
           label.form-label Observaciones
           textarea.form-control(name="observaciones")
+
         button.btn.btn-success(type="submit") Guardar

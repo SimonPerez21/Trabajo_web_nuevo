@@ -4,19 +4,55 @@ block content
   .card.shadow
     .card-body
       h2.card-title Nueva Admisión
+
       form(action="/admisiones/crear" method="POST")
-        .mb-3
+        .mb-3#pacienteGroup
           label.form-label Paciente
-          select.form-select(name="paciente_id")
+          small.text-muted.ms-2 (No obligatorio si es emergencia)
+          select.form-select(name="paciente_id" id="paciente_id")
+            option(value="") Seleccione un paciente
             each paciente in pacientes
-              option(value=paciente.id)= paciente.nombre + " " + paciente.apellido
+              option(value=paciente.id) #{paciente.nombre} #{paciente.apellido}
+
         .mb-3
-          label.form-label Fecha de Admisión
-          input.form-control(type="datetime-local", name="fecha_admision")
+          label.form-label Fecha de admisión
+          input.form-control(type="datetime-local" name="fecha_admision" required)
+
         .mb-3
-          label.form-label Tipo de Ingreso
-          select.form-select(name="tipo_ingreso")
+          label.form-label Tipo de ingreso
+          select.form-select(name="tipo_ingreso" id="tipo_ingreso" required)
+            option(value="") Seleccione
             option(value="programada") Programada
             option(value="derivada") Derivada
             option(value="emergencia") Emergencia
+
+        .mb-3
+          label.form-label Estado
+          select.form-select(name="estado" required)
+            option(value="activa") Activa
+            option(value="cancelada") Cancelada
+            option(value="finalizada") Finalizada
+
         button.btn.btn-success(type="submit") Guardar
+
+      script.
+        const tipoIngreso = document.getElementById('tipo_ingreso');
+        const pacienteGroup = document.getElementById('pacienteGroup');
+        const pacienteSelect = document.getElementById('paciente_id');
+
+        tipoIngreso.addEventListener('change', () => {
+          if (tipoIngreso.value === 'emergencia') {
+            pacienteGroup.style.display = 'none';
+            pacienteSelect.value = '';
+          } else {
+            pacienteGroup.style.display = 'block';
+          }
+        });
+
+        // Ejecutar al cargar (por si se recarga con valor)
+        window.addEventListener('DOMContentLoaded', () => {
+          if (tipoIngreso.value === 'emergencia') {
+            pacienteGroup.style.display = 'none';
+            pacienteSelect.value = '';
+          }
+        });

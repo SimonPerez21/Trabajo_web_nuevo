@@ -3,7 +3,7 @@ extends ../layout
 block content
   .card.shadow
     .card-body
-      h2.card-title Internaciones
+      h2.card-title Lista de Internaciones
       a.btn.btn-primary.mb-3(href="/internaciones/nueva") + Nueva Internación
 
       table.table.table-striped
@@ -12,7 +12,8 @@ block content
             th Paciente
             th Habitación
             th Cama
-            th Desde
+            th Fecha inicio
+            th Fecha fin
         tbody
           each i in internaciones
             tr
@@ -20,3 +21,4 @@ block content
               td #{i.habitacion}
               td #{i.cama}
               td #{i.fecha_inicio}
+              td #{i.fecha_fin || '—'}

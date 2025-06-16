@@ -9,12 +9,16 @@ block content
       table.table.table-striped
         thead.table-primary
           tr
-            th Paciente
+            th Nombre
+            th Apellido
             th Tipo Ingreso
-            th Fecha
+            th Fecha de Admisión
+            th Estado
         tbody
           each adm in admisiones
             tr
-              td #{adm.nombre} #{adm.apellido}
+              td #{adm.nombre}
+              td #{adm.apellido}
               td #{adm.tipo_ingreso}
               td #{adm.fecha_admision}
+              td #{adm.estado}

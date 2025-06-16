@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Editar Paciente
+
+      form(action=`/pacientes/${paciente.id}/actualizar` method="POST")
+        .mb-3
+          label.form-label Nombre
+          input.form-control(type="text" name="nombre" required value=paciente.nombre)
+
+        .mb-3
+          label.form-label Apellido
+          input.form-control(type="text" name="apellido" required value=paciente.apellido)
+
+        .mb-3
+          label.form-label DNI
+          if paciente.tieneAdmisiones
+            input.form-control(type="text" name="dni" readonly value=paciente.dni title="Este paciente tiene admisiones y no puede cambiar su DNI")
+          else
+            input.form-control(type="text" name="dni" required value=paciente.dni)
+
+        .mb-3
+          label.form-label Fecha de nacimiento
+          input.form-control(type="date" name="fecha_nacimiento" required value=paciente.fecha_nacimiento)
+
+        .mb-3
+          label.form-label Sexo
+          select.form-select(name="sexo" required)
+            option(value="") Seleccione
+            option(value="M" selected=paciente.sexo === 'M') Masculino
+            option(value="F" selected=paciente.sexo === 'F') Femenino
+            option(value="Otro" selected=paciente.sexo === 'Otro') Otro
+
+        .mb-3
+          label.form-label Dirección
+          input.form-control(type="text" name="direccion" value=paciente.direccion)
+
+        .mb-3
+          label.form-label Teléfono
+          input.form-control(type="text" name="telefono" value=paciente.telefono)
+
+        .mb-3
+          label.form-label Contacto de emergencia
+          input.form-control(type="text" name="contacto_emergencia" value=paciente.contacto_emergencia)
+
+        .mb-3
+          label.form-label Teléfono de emergencia
+          input.form-control(type="text" name="telefono_emergencia" value=paciente.telefono_emergencia)
+
+        button.btn.btn-success(type="submit") Actualizar

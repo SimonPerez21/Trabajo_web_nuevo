@@ -1,17 +1,19 @@
 extends ../layout
 
 block content
-  h2.mb-3 Camas Libres
+  .card.shadow
+    .card-body
+      h2.card-title Camas Libres
 
-  table.table.table-hover
-    thead
-      tr
-        th Habitación
-        th Cama
-        th Ala
-    tbody
-      each cama in camas
-        tr
-          td= cama.habitacion
-          td= cama.numero
-          td= cama.ala
+      table.table.table-striped
+        thead.table-primary
+          tr
+            th Número de cama
+            th Número de habitación
+            th Ala
+        tbody
+          each cama in camas
+            tr
+              td #{cama.numero}
+              td #{cama.habitacion}
+              td #{cama.ala}

@@ -1,19 +1,23 @@
 extends ../layout
 
 block content
-  h2.mb-3 Estado de Camas
+  .card.shadow
+    .card-body
+      h2.card-title Lista de Camas
 
-  table.table.table-bordered
-    thead
-      tr
-        th Habitación
-        th Ala
-        th Cama
-        th Estado
-    tbody
-      each cama in camas
-        tr
-          td= cama.habitacion
-          td= cama.ala
-          td= cama.numero
-          td= cama.estado
+      table.table.table-striped
+        thead.table-primary
+          tr
+            th Número de cama
+            th Estado
+            th Sexo ocupante
+            th Número de habitación
+            th Ala
+        tbody
+          each cama in camas
+            tr
+              td #{cama.numero}
+              td #{cama.estado}
+              td #{cama.sexo_ocupante || '—'}
+              td #{cama.habitacion}
+              td #{cama.ala}

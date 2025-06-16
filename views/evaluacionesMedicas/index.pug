@@ -9,12 +9,18 @@ block content
       table.table.table-striped
         thead.table-primary
           tr
-            th Fecha
             th Paciente
+            th Fecha
             th Diagnóstico
+            th Tratamiento
+            th Medicamentos
+            th Observaciones
         tbody
-          each ev in evaluaciones
+          each e in evaluaciones
             tr
-              td= ev.fecha
-              td= ev.nombre + " " + ev.apellido
-              td= ev.diagnostico
+              td #{e.nombre} #{e.apellido}
+              td #{e.fecha}
+              td #{e.diagnostico}
+              td #{e.tratamiento}
+              td #{e.medicamentos}
+              td #{e.observaciones}

@@ -1,8 +1,13 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const dotenv = require('dotenv');
+const fs = require('fs');
+const db = require('./config/db'); // Asegurate de tener este archivo correctamente configurado
+
 dotenv.config();
+const app = express();
+
+
 
 // Configuración de vistas
 app.set('view engine', 'pug');
@@ -14,24 +19,25 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas
-app.use('/pacientes', require('./routes/pacienteRoutes'));
+app.use('/pacientes', require('./routes/pacientesRoutes'));
 app.use('/admisiones', require('./routes/admisionesRoutes'));
 app.use('/camas', require('./routes/camasRoutes'));
 app.use('/internaciones', require('./routes/internacionesRoutes'));
 app.use('/evaluacionesMedicas', require('./routes/evaluacionesMedicasRoutes'));
 app.use('/evaluacionesEnfermeria', require('./routes/evaluacionesEnfermeriaRoutes'));
 
-
- // Ruta raíz
- app.get('/', (req, res) => {
+// ✅ Ruta raíz: renderiza la vista "home"
+app.get('/', (req, res) => {
   res.render('home');
- });
+});
 
-// Manejo de errores
+// Manejador para página no encontrada
 app.use((req, res) => {
   res.status(404).send('Página no encontrada');
 });
 
-// Servidor
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+});

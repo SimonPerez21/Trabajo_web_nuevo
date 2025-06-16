@@ -1,7 +1,8 @@
-const db = require('../config/db');
+const getDB = require('../config/db');
 
-exports.obtenerTodas = () =>
-  db.query(`
+exports.obtenerTodas = async () => {
+  const db = await getDB();
+  return db.all(`
     SELECT ee.*, p.nombre, p.apellido
     FROM evaluacionesenfermeria ee
     LEFT JOIN internaciones i ON ee.internacion_id = i.id
@@ -9,9 +10,11 @@ exports.obtenerTodas = () =>
     LEFT JOIN pacientes p ON a.paciente_id = p.id
     ORDER BY ee.fecha DESC
   `);
+};
 
-exports.crear = (data) =>
-  db.query(
+exports.crear = async (data) => {
+  const db = await getDB();
+  return db.run(
     `INSERT INTO evaluacionesenfermeria 
      (internacion_id, admision_id, fecha, sintomas, antecedentes, plan_cuidados)
      VALUES (?, ?, ?, ?, ?, ?)`,
@@ -24,3 +27,4 @@ exports.crear = (data) =>
       data.plan_cuidados,
     ]
   );
+};

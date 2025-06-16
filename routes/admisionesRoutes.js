@@ -7,4 +7,3 @@ router.get('/nuevo', controller.formularioNuevo);
 router.post('/crear', controller.crear);
 
 module.exports = router;
-

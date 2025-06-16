@@ -3,13 +3,13 @@ const Admision = require('../models/admisionModel');
 const Cama = require('../models/camaModel');
 
 exports.listar = async (req, res) => {
-  const [internaciones] = await Internacion.obtenerTodas();
+  const internaciones = await Internacion.obtenerTodas();
   res.render('internaciones/index', { internaciones });
 };
 
 exports.formularioNueva = async (req, res) => {
-  const [admisiones] = await Admision.obtenerActivas();
-  const [camas] = await Cama.obtenerLibres();
+  const admisiones = await Admision.obtenerActivas();
+  const camas = await Cama.obtenerLibres();
   res.render('internaciones/nuevo', { admisiones, camas });
 };
 

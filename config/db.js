@@ -1,11 +1,12 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const sqlite3 = require('sqlite3').verbose();
+const { open } = require('sqlite');
+const path = require('path');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-});
+async function connectDB() {
+  return open({
+    filename: path.join(__dirname, 'init_sqlite.sqlite'),
+    driver: sqlite3.Database
+  });
+}
 
-module.exports = pool;
+module.exports = connectDB;
