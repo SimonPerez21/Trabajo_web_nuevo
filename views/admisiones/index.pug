@@ -12,13 +12,18 @@ block content
             th Nombre
             th Apellido
             th Tipo Ingreso
+            th Origen de derivación
             th Fecha de Admisión
             th Estado
+            th Acciones
         tbody
           each adm in admisiones
             tr
               td #{adm.nombre}
               td #{adm.apellido}
               td #{adm.tipo_ingreso}
+              td #{adm.origen_derivacion || '—'}
               td #{adm.fecha_admision}
               td #{adm.estado}
+              td
+                a.btn.btn-sm.btn-outline-primary(href=`/admisiones/${adm.id}/editar`) Editar

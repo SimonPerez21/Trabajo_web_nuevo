@@ -9,7 +9,7 @@ block content
         .mb-3#pacienteGroup
           label.form-label Paciente
           small.text-muted.ms-2 (No obligatorio si es emergencia)
-          select.form-select(name="paciente_id" id="paciente_id")
+          select.form-select(name="paciente_id")
             option(value="") Seleccione un paciente
             each paciente in pacientes
               option(value=paciente.id) #{paciente.nombre} #{paciente.apellido}
@@ -26,6 +26,29 @@ block content
             option(value="derivada") Derivada
             option(value="emergencia") Emergencia
 
+        .mb-3#origenGroup(style="display: none;")
+          label.form-label Origen de derivación
+          select.form-select(name="origen_derivacion_select" id="origen_derivacion_select")
+            option(value="") Seleccione origen
+            option(value="Hospital Regional") Hospital Regional
+            option(value="Hospital Central") Hospital Central
+            option(value="Hospital Municipal") Hospital Municipal
+            option(value="Hospital del Sur") Hospital del Sur
+            option(value="Hospital del Norte") Hospital del Norte
+            option(value="Clínica San Martín") Clínica San Martín
+            option(value="Hospital Universitario") Hospital Universitario
+            option(value="Hospital Provincial") Hospital Provincial
+            option(value="Clínica Santa Rosa") Clínica Santa Rosa
+            option(value="Hospital de Alta Complejidad") Hospital de Alta Complejidad
+            option(value="Hospital Materno Infantil") Hospital Materno Infantil
+            option(value="Clínica del Valle") Clínica del Valle
+            option(value="Hospital General") Hospital General
+            option(value="Sanatorio Nuestra Señora") Sanatorio Nuestra Señora
+            option(value="Centro Médico Los Andes") Centro Médico Los Andes
+            option(value="otro") Otro (especifique abajo)
+
+          input.form-control.mt-2(type="text" name="origen_derivacion" id="origen_derivacion_input" placeholder="Especifique otro origen" style="display: none;")
+
         .mb-3
           label.form-label Estado
           select.form-select(name="estado" required)
@@ -39,20 +62,35 @@ block content
         const tipoIngreso = document.getElementById('tipo_ingreso');
         const pacienteGroup = document.getElementById('pacienteGroup');
         const pacienteSelect = document.getElementById('paciente_id');
+        const origenGroup = document.getElementById('origenGroup');
+        const origenSelect = document.getElementById('origen_derivacion_select');
+        const origenInput = document.getElementById('origen_derivacion_input');
 
         tipoIngreso.addEventListener('change', () => {
-          if (tipoIngreso.value === 'emergencia') {
+          const tipo = tipoIngreso.value;
+
+          if (tipo === 'emergencia') {
             pacienteGroup.style.display = 'none';
             pacienteSelect.value = '';
+            origenGroup.style.display = 'none';
+            origenSelect.value = '';
+            origenInput.value = '';
           } else {
             pacienteGroup.style.display = 'block';
+            origenGroup.style.display = tipo === 'derivada' ? 'block' : 'none';
           }
         });
 
-        // Ejecutar al cargar (por si se recarga con valor)
-        window.addEventListener('DOMContentLoaded', () => {
-          if (tipoIngreso.value === 'emergencia') {
-            pacienteGroup.style.display = 'none';
-            pacienteSelect.value = '';
+        origenSelect.addEventListener('change', () => {
+          origenInput.style.display = origenSelect.value === 'otro' ? 'block' : 'none';
+          if (origenSelect.value !== 'otro') {
+            origenInput.value = origenSelect.value;
+          } else {
+            origenInput.value = '';
           }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+          tipoIngreso.dispatchEvent(new Event('change'));
+          origenSelect.dispatchEvent(new Event('change'));
         });

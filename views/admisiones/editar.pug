@@ -1,0 +1,99 @@
+extends ../layout
+
+block content
+  .card.shadow
+    .card-body
+      h2.card-title Editar Admisión
+
+      form(action=`/admisiones/${admision.id}/actualizar` method="POST")
+        .mb-3
+          label.form-label Paciente
+          select.form-select(name="paciente_id" required)
+            each paciente in pacientes
+              option(
+                value=paciente.id
+                selected=(paciente.id === admision.paciente_id)
+              ) #{paciente.nombre} #{paciente.apellido}
+
+        .mb-3
+          label.form-label Fecha de admisión
+          input.form-control(
+            type="datetime-local"
+            name="fecha_admision"
+            required
+            value=admision.fecha_admision
+          )
+
+        .mb-3
+          label.form-label Tipo de ingreso
+          select.form-select(name="tipo_ingreso" id="tipo_ingreso" required)
+            option(value="programada" selected=admision.tipo_ingreso === 'programada') Programada
+            option(value="derivada" selected=admision.tipo_ingreso === 'derivada') Derivada
+            option(value="emergencia" selected=admision.tipo_ingreso === 'emergencia') Emergencia
+
+        .mb-3#origenGroup(style=admision.tipo_ingreso === 'derivada' ? 'display:block;' : 'display:none;')
+          label.form-label Origen de derivación
+          select.form-select(name="origen_derivacion_select" id="origen_derivacion_select")
+            option(value="") Seleccione origen
+            option(value="Hospital Regional" selected=admision.origen_derivacion === 'Hospital Regional') Hospital Regional
+            option(value="Hospital Central" selected=admision.origen_derivacion === 'Hospital Central') Hospital Central
+            option(value="Hospital Municipal" selected=admision.origen_derivacion === 'Hospital Municipal') Hospital Municipal
+            option(value="Hospital del Sur" selected=admision.origen_derivacion === 'Hospital del Sur') Hospital del Sur
+            option(value="Hospital del Norte" selected=admision.origen_derivacion === 'Hospital del Norte') Hospital del Norte
+            option(value="Clínica San Martín" selected=admision.origen_derivacion === 'Clínica San Martín') Clínica San Martín
+            option(value="Hospital Universitario" selected=admision.origen_derivacion === 'Hospital Universitario') Hospital Universitario
+            option(value="Hospital Provincial" selected=admision.origen_derivacion === 'Hospital Provincial') Hospital Provincial
+            option(value="Clínica Santa Rosa" selected=admision.origen_derivacion === 'Clínica Santa Rosa') Clínica Santa Rosa
+            option(value="Hospital de Alta Complejidad" selected=admision.origen_derivacion === 'Hospital de Alta Complejidad') Hospital de Alta Complejidad
+            option(value="Hospital Materno Infantil" selected=admision.origen_derivacion === 'Hospital Materno Infantil') Hospital Materno Infantil
+            option(value="Clínica del Valle" selected=admision.origen_derivacion === 'Clínica del Valle') Clínica del Valle
+            option(value="Hospital General" selected=admision.origen_derivacion === 'Hospital General') Hospital General
+            option(value="Sanatorio Nuestra Señora" selected=admision.origen_derivacion === 'Sanatorio Nuestra Señora') Sanatorio Nuestra Señora
+            option(value="Centro Médico Los Andes" selected=admision.origen_derivacion === 'Centro Médico Los Andes') Centro Médico Los Andes
+            option(value="otro" selected=admision.usa_origen_personalizado) Otro (especifique abajo)
+
+          input.form-control.mt-2(
+            type="text"
+            name="origen_derivacion"
+            id="origen_derivacion_input"
+            placeholder="Especifique otro origen"
+            value=admision.usa_origen_personalizado ? admision.origen_derivacion : ''
+            style=admision.usa_origen_personalizado ? 'display:block;' : 'display:none;'
+          )
+
+        .mb-3
+          label.form-label Estado
+          select.form-select(name="estado" required)
+            option(value="activa" selected=admision.estado === 'activa') Activa
+            option(value="cancelada" selected=admision.estado === 'cancelada') Cancelada
+            option(value="finalizada" selected=admision.estado === 'finalizada') Finalizada
+
+        button.btn.btn-success(type="submit") Actualizar
+
+      script.
+        const tipoIngreso = document.getElementById('tipo_ingreso');
+        const origenGroup = document.getElementById('origenGroup');
+        const origenSelect = document.getElementById('origen_derivacion_select');
+        const origenInput = document.getElementById('origen_derivacion_input');
+
+        tipoIngreso.addEventListener('change', () => {
+          origenGroup.style.display = tipoIngreso.value === 'derivada' ? 'block' : 'none';
+          if (tipoIngreso.value !== 'derivada') {
+            origenInput.value = '';
+          }
+        });
+
+        origenSelect.addEventListener('change', () => {
+          if (origenSelect.value === 'otro') {
+            origenInput.style.display = 'block';
+            origenInput.value = '';
+          } else {
+            origenInput.style.display = 'none';
+            origenInput.value = origenSelect.value;
+          }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+          tipoIngreso.dispatchEvent(new Event('change'));
+          origenSelect.dispatchEvent(new Event('change'));
+        });
